@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.authors = ["LockeZz"]
   spec.email = ["LockeZz.PHF@gmail.com"]
 
-  spec.summary = "TODO: Write a short summary, because RubyGems requires one."
+  spec.summary = "Ruby on Rails integration for SQL Account Software"
   spec.description = "TODO: Write a longer description or delete this line."
   spec.homepage = "TODO: Put your gem's website or public repo URL here."
   spec.license = "MIT"
@@ -33,6 +33,12 @@ Gem::Specification.new do |spec|
 
   # Uncomment to register a new dependency of your gem
   # spec.add_dependency "example-gem", "~> 1.0"
+  spec.add_dependency "activerecord", ">= 7.0"
+  spec.add_dependency "fb", "~> 0.10.0"
+  spec.add_dependency "firebird_adapter" 
+  
+  spec.add_development_dependency "rspec"
+  spec.add_development_dependency "sqlite3"
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html
