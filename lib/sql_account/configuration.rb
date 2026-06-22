@@ -5,30 +5,19 @@ module SqlAccount
 
     def initialize
       @port = 3050
-      @encoding = "UTF-8"
+      @encoding = 'UTF-8'
     end
 
-    class << self
-      
-      def configure
-        yield(configuration)
-      end
-
-      def configuration
-        @configuration ||= Configuration.new
-      end
-
-      def establish_connection!
-        ActiveRecord::Base.establish_connection(
-          adapter: "firebird",
-          host: configuration.host,
-          port: configuration.port,
-          database: configuration.database,
-          username: configuration.username,
-          password: configuration.password,
-          encoding: configuration.encoding
-        )
-      end
+    def to_h 
+      {
+        adapter: 'firebird',
+        host: host,
+        database: database, 
+        username: username, 
+        password: password, 
+        encoding: encoding
+      }
+    end
 
   end
 end
