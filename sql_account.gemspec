@@ -35,7 +35,6 @@ Gem::Specification.new do |spec|
   # spec.add_dependency "example-gem", "~> 1.0"
   spec.add_dependency "activerecord", ">= 7.0"
   spec.add_dependency "fb", "~> 0.10.0"
-  spec.add_dependency "firebird_adapter" 
   
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "sqlite3"

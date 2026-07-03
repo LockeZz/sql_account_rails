@@ -1,3 +1,5 @@
+require 'rails/generators/base'
+
 module SqlAccount
   module Generators
     class InstallGenerators < Rails::Generators::Base
@@ -6,6 +8,10 @@ module SqlAccount
 
       def copy_initializer
         template 'sql_account_initializer.rb', 'config/initializer/sql_account.rb'
+      end
+
+      def show_readme
+        say "\nSqlAccount installed! Edit config/initializer/sql_account.rb and set your ENV vars.", :green
       end
 
     end
