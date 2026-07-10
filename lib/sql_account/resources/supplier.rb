@@ -1,8 +1,7 @@
 module SqlAccount
-  class StockGroup < Record
+  class Supplier < Record 
 
     self.table_name = "ap_supplier"
-
 
   end
 end

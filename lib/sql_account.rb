@@ -7,7 +7,11 @@ require_relative "sql_account/configuration"
 require_relative "sql_account/connection"
 require_relative "sql_account/resources/record"
 # require_relative "sql_account/resources/customer"
+require_relative "sql_account/resources/supplier"
 require_relative "sql_account/resources/stock_item"
+require_relative "sql_account/resources/stock_group"
+require_relative "sql_account/resources/stock_item_category"
+require_relative "sql_account/resources/stock_category"
 require_relative "sql_account/resources/invoice"
 
 module SqlAccount
