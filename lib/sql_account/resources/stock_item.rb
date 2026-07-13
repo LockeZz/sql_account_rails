@@ -34,6 +34,26 @@ module SqlAccount
       foreign_key: 'code',
       primary_key: 'code'
 
+    # has_many :matrices,
+    #   class_name: 'SqlAccount::StockItemMatrix',
+    #   foreign_key: 'code',
+    #   primary_key: 'code'
+
+    # has_many :batches,
+    #   class_name: 'SqlAccount::StockItemBatch',
+    #   foreign_key: 'code',
+    #   primary_key: 'code'
+
+    has_many :opening_balances,
+      class_name: 'SqlAccount::StockItemOb',
+      foreign_key: 'itemcode',
+      primary_key: 'code'
+
+    has_many :templates,
+      class_name: 'SqlAccount::StockItemTpl',
+      foreign_key: 'code',
+      primary_key: 'code'
+
     has_many :supplier_items,
       -> { where(ctype: 'S') },
       class_name: 'SqlAccount::StockItemCompany',
