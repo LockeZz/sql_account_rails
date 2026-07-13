@@ -2,7 +2,12 @@ module SqlAccount
   class StockGroup < Record
 
     self.table_name = "st_group"
+    self.primary_key = 'code'
 
+    has_many :stock_items,
+      class_name: 'SqlAccount::StockItem',
+      foreign_key: 'stockgroup',
+      primary_key: 'code'
 
   end
 end

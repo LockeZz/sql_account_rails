@@ -5,13 +5,28 @@ require "firebird_adapter"
 require_relative "sql_account/version"
 require_relative "sql_account/configuration"
 require_relative "sql_account/connection"
+
 require_relative "sql_account/resources/record"
+
 # require_relative "sql_account/resources/customer"
 require_relative "sql_account/resources/supplier"
-require_relative "sql_account/resources/stock_item"
-require_relative "sql_account/resources/stock_group"
-require_relative "sql_account/resources/stock_item_category"
 require_relative "sql_account/resources/stock_category"
+
+require_relative 'sql_account/resources/stock_group'
+require_relative 'sql_account/resources/stock_item'
+require_relative 'sql_account/resources/stock_item_uom'
+require_relative 'sql_account/resources/stock_item_barcode'
+require_relative 'sql_account/resources/stock_item_bom'
+require_relative 'sql_account/resources/stock_item_alt'
+require_relative 'sql_account/resources/stock_item_category'
+require_relative 'sql_account/resources/stock_item_company'
+require_relative 'sql_account/resources/stock_item_price'
+require_relative 'sql_account/resources/stock_item_tpl'
+require_relative 'sql_account/resources/stock_item_tpldtl'
+require_relative 'sql_account/resources/stock_item_matrix'
+require_relative 'sql_account/resources/stock_item_batch'
+require_relative 'sql_account/resources/stock_item_ob'
+
 require_relative "sql_account/resources/invoice"
 
 module SqlAccount

@@ -1,20 +1,72 @@
 module SqlAccount
   class StockItem < Record 
 
-    self.table_name = "st_item"
-    # self.primary_key = 'code'
+    self.table_name = 'st_item'
+    self.primary_key = 'dockey'
 
-    # companion table associations (to add once we model those tables)
-    # has_many :prices,    foreign_key: 'itemcode', class_name: 'SqlAccount::StockItemPrice'
-    # has_many :uoms,      foreign_key: 'itemcode', class_name: 'SqlAccount::StockItemUom'
-    # has_many :barcodes,  foreign_key: 'itemcode', class_name: 'SqlAccount::StockItemBarcode'
+    belongs_to :stock_group,
+      class_name: 'SqlAccount::StockGroup',
+      foreign_key: 'stockgroup',
+      primary_key: 'code'
+
+    has_many :uoms,
+      class_name: 'SqlAccount::StockItemUom',
+      foreign_key: 'code',
+      primary_key: 'code'
+
+    has_many :barcodes,
+      class_name: 'SqlAccount::StockItemBarcode',
+      foreign_key: 'code',
+      primary_key: 'code'
+
+    has_many :bom_lines,
+      class_name: 'SqlAccount::StockItemBom',
+      foreign_key: 'code',
+      primary_key: 'code'
+
+    has_many :alt_items,
+      class_name: 'SqlAccount::StockItemAlt',
+      foreign_key: 'code',
+      primary_key: 'code'
+
+    has_many :categories,
+      class_name: 'SqlAccount::StockItemCategory',
+      foreign_key: 'code',
+      primary_key: 'code'
+
+    has_many :supplier_items,
+      -> { where(ctype: 'S') },
+      class_name: 'SqlAccount::StockItemCompany',
+      foreign_key: 'code',
+      primary_key: 'code'
+
+    has_many :customer_items,
+      -> { where(ctype: 'C') },
+      class_name: 'SqlAccount::StockItemCompany',
+      foreign_key: 'code',
+      primary_key: 'code'
+
+    has_many :supplier_prices,
+      -> { where(tagtype: 'S') },
+      class_name: 'SqlAccount::StockItemPrice',
+      foreign_key: 'code',
+      primary_key: 'code'
+
+    has_many :customer_prices,
+      -> { where(tagtype: 'C') },
+      class_name: 'SqlAccount::StockItemPrice',
+      foreign_key: 'code',
+      primary_key: 'code'
 
     # exclude heavy binary columns from default queries
     default_scope { select(column_names - %w[picture attachments note description3]) }
 
-    # convenience scopes
-    scope :active,   -> { where(isactive: 'T') }
-    scope :inactive, -> { where(isactive: 'F') }
+    scope :active,        -> { where(isactive: 'T') }
+    scope :inactive,      -> { where(isactive: 'F') }
+    scope :stock_control, -> { where(stockcontrol: 'T') }
+    scope :with_serial,   -> { where(serialnumber: 'T') }
+    scope :bom_items,     -> { where(itemtype: 'B') }
+    scope :normal_items,  -> { where(itemtype: '-') }
 
   end
 end
