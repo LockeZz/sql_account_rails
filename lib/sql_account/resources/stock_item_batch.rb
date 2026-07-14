@@ -10,5 +10,11 @@ module SqlAccount
 
     # NOTE: batch tracking for items with serialnumber/batch control enabled
     # Confirm column structure via column inspection before use
+
+    # columns:
+    # autokey   - Primary Key
+    # parentkey - Parent Batch Key (self-referential, 0 = root)
+    # itemcode  - Product Code (FK to st_item.code)
+
   end
 end

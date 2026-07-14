@@ -16,5 +16,17 @@ module SqlAccount
 
     # NOTE: columns not fully documented in spec — confirm via column inspection
     # against your actual database before relying on this model
+
+    # columns:
+    # (Unknown computed col)
+    # code          - Template Code (PK)
+    # description   - Template Description
+    # description2  - Template Description 2
+    # description3  - Template Description 3 (Binary/Blob)
+    # refprice      - Reference Price
+    # isactive      - Active flag (boolean)
+    # attachments   - Attachments (Binary/Blob)
+    # lastmodified  - Last Modified (Unix timestamp integer)
+
   end
 end

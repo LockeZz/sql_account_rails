@@ -32,6 +32,35 @@ module SqlAccount
     scope :adjustments,     -> { for_doctype('AJ') }
     scope :transfers,       -> { for_doctype('XF') }
 
+    # columns:
+    # transno     - Primary Key
+    # itemcode    - Product Code (FK to st_item.code)
+    # postdate    - Post Date
+    # doctype     - Document Type:
+    #               'OB' = Opening Balance
+    #               'IV' = Sales Invoice
+    #               'DO' = Delivery Order
+    #               'GR' = Goods Received
+    #               'PI' = Purchase Invoice
+    #               'AJ' = Stock Adjustment
+    #               'XF' = Stock Transfer
+    #               'CS' = Cash Sales
+    #               'CN' = Credit Note
+    # dockey      - FK to document header (e.g. st_aj.dockey, sl_iv.dockey)
+    # dtlkey      - FK to document detail line
+    # location    - Location / Warehouse
+    # area        - Area
+    # agent       - Agent
+    # project     - Project
+    # batch       - Batch No
+    # qty         - Quantity (positive = in, negative = out)
+    # cost        - Unit Cost
+    # price       - Unit Price
+    # docno       - Document No (denormalized for reporting)
+    # description - Description (denormalized for reporting)
+    # refto       - Reference To (links to source transaction)
+
+
     # Balance calculation — mirrors eStream SDK pattern:
     # SELECT SUM(qty) FROM ST_TR WHERE postdate <= ? AND itemcode = ?
     # grouped optionally by location and/or batch
