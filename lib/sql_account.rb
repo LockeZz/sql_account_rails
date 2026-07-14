@@ -43,7 +43,8 @@ require_relative 'sql_account/resources/stock_adjustment'
 require_relative 'sql_account/resources/stock_adjustment_line'
 
 # Invoice
-require_relative "sql_account/resources/invoice"
+require_relative "sql_account/resources/purchase_invoice"
+require_relative "sql_account/resources/purchase_invoice_line"
 
 module SqlAccount
   class << self 
