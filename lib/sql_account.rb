@@ -34,6 +34,7 @@ require_relative 'sql_account/resources/stock_item_matrix'
 require_relative 'sql_account/resources/stock_item_batch'
 require_relative 'sql_account/resources/stock_item_ob'
 require_relative 'sql_account/resources/stock_transaction'
+require_relative 'sql_account/resources/stock_transaction_wma'
 require_relative "sql_account/resources/stock_category"
 
 

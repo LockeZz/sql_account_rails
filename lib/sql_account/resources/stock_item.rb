@@ -98,7 +98,7 @@ module SqlAccount
     # exclude heavy binary columns from default queries
     default_scope { select(column_names - %w[picture attachments note description3]) }
     
-    
+
     # Stock balance helpers — derived from ST_TR (stock transaction ledger)
     # More accurate than balsqty (cached column) for historical/filtered queries
     def balance(location: nil, batch: nil, project: nil, as_of: Date.today)
@@ -126,6 +126,58 @@ module SqlAccount
 
     def balance_by_batch(location: nil, as_of: Date.today)
       SqlAccount::StockTransaction.balance_by_batch(code, location: location, as_of: as_of)
+    end
+
+    # Weighted average cost — derived from ST_TR_WMA (month-end costing table)
+    # NOTE: only as accurate as the last time "Month End Costing" was run
+    # inside SQL Account's UI. Not a live real-time calculation.
+    # Returns: { utdqty:, utdcost:, diffcost: }
+    def weighted_average_cost(location: nil, batch: nil, as_of: Date.today)
+      SqlAccount::StockTransactionWma.weighted_average_for(
+        code,
+        location: location,
+        batch: batch,
+        as_of: as_of
+      )
+    end
+
+    def costing_snapshot(location: nil, batch: nil, as_of: Date.today)
+      SqlAccount::StockTransactionWma.snapshot_for(
+        code,
+        location: location,
+        batch: batch,
+        as_of: as_of
+      )
+    end
+
+    # FIFO cost — from ST_TR_FIFO (month end costing table)
+    # Only relevant for items with costingmethod = FIFO
+    # Only accurate after "Month End Costing" has been run in SQL Account UI
+    def fifo_cost(location: nil, batch: nil, as_of: Date.today)
+      SqlAccount::StockTransactionFifo.fifo_cost_for(
+        code,
+        location: location,
+        batch: batch,
+        as_of: as_of
+      )
+    end
+
+    def fifo_cost_layers(location: nil, batch: nil, as_of: Date.today)
+      SqlAccount::StockTransactionFifo.cost_layers_for(
+        code,
+        location: location,
+        batch: batch,
+        as_of: as_of
+      )
+    end
+
+    def fifo_stock_value(location: nil, batch: nil, as_of: Date.today)
+      SqlAccount::StockTransactionFifo.stock_value_for(
+        code,
+        location: location,
+        batch: batch,
+        as_of: as_of
+      )
     end
 
 
