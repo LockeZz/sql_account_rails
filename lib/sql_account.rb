@@ -19,7 +19,6 @@ require_relative 'sql_account/resources/supplier_cr_ctrl'
 require_relative 'sql_account/resources/supplier_tariff'
 
 # Stock
-require_relative 'sql_account/resources/stock_group'
 require_relative 'sql_account/resources/stock_item'
 require_relative 'sql_account/resources/stock_item_uom'
 require_relative 'sql_account/resources/stock_item_barcode'
@@ -36,8 +35,14 @@ require_relative 'sql_account/resources/stock_item_ob'
 require_relative 'sql_account/resources/stock_transaction'
 require_relative 'sql_account/resources/stock_transaction_wma'
 require_relative "sql_account/resources/stock_category"
+require_relative 'sql_account/resources/stock_group'
+require_relative 'sql_account/resources/stock_batch'
+require_relative 'sql_account/resources/stock_assembly'
+require_relative 'sql_account/resources/stock_assembly_line'
+require_relative 'sql_account/resources/stock_adjustment'
+require_relative 'sql_account/resources/stock_adjustment_line'
 
-
+# Invoice
 require_relative "sql_account/resources/invoice"
 
 module SqlAccount

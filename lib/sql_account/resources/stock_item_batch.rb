@@ -1,20 +1,32 @@
 module SqlAccount
   class StockItemBatch < Record
     self.table_name = 'st_item_batch'
-    # primary key: to be confirmed from actual column inspection
+    self.primary_key = 'autokey'
+
+    belongs_to :stock_batch,
+      class_name: 'SqlAccount::StockBatch',
+      foreign_key: 'parentkey',
+      primary_key: 'autokey'
 
     belongs_to :stock_item,
       class_name: 'SqlAccount::StockItem',
-      foreign_key: 'code',
+      foreign_key: 'itemcode',
       primary_key: 'code'
 
-    # NOTE: batch tracking for items with serialnumber/batch control enabled
-    # Confirm column structure via column inspection before use
+    # validations
+    validates :itemcode, presence: true
+
+    # scopes
+    scope :for_item, ->(code) { where(itemcode: code) }
 
     # columns:
     # autokey   - Primary Key
-    # parentkey - Parent Batch Key (self-referential, 0 = root)
+    # parentkey - FK to st_batch.autokey
     # itemcode  - Product Code (FK to st_item.code)
-
+    #
+    # NOTE: this is the detail table of ST_BATCH (batch master),
+    # listing which stock items belong to a given batch.
+    # It is NOT a standalone batch tracking table for individual items.
+    # For batch-level stock balances, use ST_TR filtered by batch column.
   end
 end

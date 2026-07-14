@@ -35,15 +35,20 @@ module SqlAccount
       primary_key: 'code'
 
     # BATCH AND MATRIX SEEMS TO BE NOT RELEVANT HERE. PENDING TO CHECK
-    # has_many :matrices,
-    #   class_name: 'SqlAccount::StockItemMatrix',
-    #   foreign_key: 'code',
-    #   primary_key: 'code'
+    has_many :matrices,
+      class_name: 'SqlAccount::StockItemMatrix',
+      foreign_key: 'code',
+      primary_key: 'code'
 
-    # has_many :batches,
-    #   class_name: 'SqlAccount::StockItemBatch',
-    #   foreign_key: 'code',
-    #   primary_key: 'code'
+    has_many :batch_memberships,
+      class_name: 'SqlAccount::StockItemBatch',
+      foreign_key: 'itemcode',
+      primary_key: 'code'
+
+    has_many :batches,
+      through: :batch_memberships,
+      class_name: 'SqlAccount::StockBatch',
+      source: :stock_batch
 
     has_many :opening_balances,
       class_name: 'SqlAccount::StockItemOb',
