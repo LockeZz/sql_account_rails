@@ -2,6 +2,49 @@ module SqlAccount
   class Supplier < Record 
 
     self.table_name = "ap_supplier"
+    self.primary_key = 'code'
+
+    has_many :branches,
+      class_name: 'SqlAccount::SupplierBranch',
+      foreign_key: 'code',
+      primary_key: 'code'
+    
+    has_many :bank_accounts,
+      class_name: 'SqlAccount::SupplierBankAcc',
+      foreign_key: 'code',
+      primary_key: 'code'
+
+    has_many :credit_controls,
+      class_name: 'SqlAccount::SupplierCrCtrl',
+      foreign_key: 'code',
+      primary_key: 'code'
+
+    has_many :tariffs,
+      class_name: 'SqlAccount::SupplierTariff',
+      foreign_key: 'code',
+      primary_key: 'code'
+
+    # branch shortcuts
+    has_one :billing_branch,
+      -> { where("TRIM(branchtype) = 'B'") },
+      class_name: 'SqlAccount::SupplierBranch',
+      foreign_key: 'code',
+      primary_key: 'code'
+
+    has_one :delivery_branch,
+      -> { where("TRIM(branchtype) = 'D'") },
+      class_name: 'SqlAccount::SupplierBranch',
+      foreign_key: 'code',
+      primary_key: 'code'
+
+    scope :active,   -> { where("TRIM(status) = 'A'") }
+    scope :inactive, -> { where("TRIM(status) = 'I'") }
+
+    validates :code,        presence: true
+    validates :companyname, presence: true
+
+    # exclude heavy binary columns by default
+    default_scope { select(column_names - %w[attachments note]) }
 
   end
 end

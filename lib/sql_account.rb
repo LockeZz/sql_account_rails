@@ -10,8 +10,15 @@ require_relative "sql_account/resources/record"
 
 # require_relative "sql_account/resources/customer"
 require_relative "sql_account/resources/supplier"
-require_relative "sql_account/resources/stock_category"
 
+# Supplier
+require_relative 'sql_account/resources/supplier'
+require_relative 'sql_account/resources/supplier_branch'
+require_relative 'sql_account/resources/supplier_bank_acc'
+require_relative 'sql_account/resources/supplier_cr_ctrl'
+require_relative 'sql_account/resources/supplier_tariff'
+
+# Stock
 require_relative 'sql_account/resources/stock_group'
 require_relative 'sql_account/resources/stock_item'
 require_relative 'sql_account/resources/stock_item_uom'
@@ -26,6 +33,9 @@ require_relative 'sql_account/resources/stock_item_tpldtl'
 require_relative 'sql_account/resources/stock_item_matrix'
 require_relative 'sql_account/resources/stock_item_batch'
 require_relative 'sql_account/resources/stock_item_ob'
+require_relative 'sql_account/resources/stock_transaction'
+require_relative "sql_account/resources/stock_category"
+
 
 require_relative "sql_account/resources/invoice"
 

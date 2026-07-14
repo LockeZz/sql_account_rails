@@ -98,6 +98,36 @@ module SqlAccount
     # exclude heavy binary columns from default queries
     default_scope { select(column_names - %w[picture attachments note description3]) }
     
+    
+    # Stock balance helpers — derived from ST_TR (stock transaction ledger)
+    # More accurate than balsqty (cached column) for historical/filtered queries
+    def balance(location: nil, batch: nil, project: nil, as_of: Date.today)
+      SqlAccount::StockTransaction.balance_for(
+        code,
+        location: location,
+        batch: batch,
+        project: project,
+        as_of: as_of
+      )
+    end
+
+    def stock_value(location: nil, batch: nil, as_of: Date.today)
+      SqlAccount::StockTransaction.stock_value_for(
+        code,
+        location: location,
+        batch: batch,
+        as_of: as_of
+      )
+    end
+
+    def balance_by_location(as_of: Date.today)
+      SqlAccount::StockTransaction.balance_by_location(code, as_of: as_of)
+    end
+
+    def balance_by_batch(location: nil, as_of: Date.today)
+      SqlAccount::StockTransaction.balance_by_batch(code, location: location, as_of: as_of)
+    end
+
 
     # Safe UOM update — mirrors eStream SDK pattern (delete all, reinsert)
     # Usage: item.update_uoms([{ uom: 'PCS', rate: 1, refcost: 10, refprice: 25, isbase: 1 }, ...])
