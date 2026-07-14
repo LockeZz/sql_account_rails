@@ -9,6 +9,10 @@ module SqlAccount
       foreign_key: 'code',
       primary_key: 'code'
 
+    validates :uom, presence: true
+    validates :rate, presence: true
+    validates :isbase, inclusion: { in: [0,1] }
+
     # scopes
     scope :base_uom, -> { where(isbase: 1) }
     scope :non_base, -> { where(isbase: 0) }

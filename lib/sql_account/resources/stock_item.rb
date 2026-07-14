@@ -34,6 +34,7 @@ module SqlAccount
       foreign_key: 'code',
       primary_key: 'code'
 
+    # BATCH AND MATRIX SEEMS TO BE NOT RELEVANT HERE. PENDING TO CHECK
     # has_many :matrices,
     #   class_name: 'SqlAccount::StockItemMatrix',
     #   foreign_key: 'code',
@@ -78,8 +79,14 @@ module SqlAccount
       foreign_key: 'code',
       primary_key: 'code'
 
-    # exclude heavy binary columns from default queries
-    default_scope { select(column_names - %w[picture attachments note description3]) }
+    
+    validates :code, presence: true
+    validates :description, presence: true
+    validates :stockgroup, presence: true
+    validates :stockcontrol, presence: true
+    validates :isactive, presence: true, inclusion: { in: %w[T F] }
+
+    before_destroy :check_not_used_in_transactions
 
     scope :active,        -> { where(isactive: 'T') }
     scope :inactive,      -> { where(isactive: 'F') }
@@ -87,6 +94,46 @@ module SqlAccount
     scope :with_serial,   -> { where(serialnumber: 'T') }
     scope :bom_items,     -> { where(itemtype: 'B') }
     scope :normal_items,  -> { where(itemtype: '-') }
+    
+    # exclude heavy binary columns from default queries
+    default_scope { select(column_names - %w[picture attachments note description3]) }
+    
+
+    # Safe UOM update — mirrors eStream SDK pattern (delete all, reinsert)
+    # Usage: item.update_uoms([{ uom: 'PCS', rate: 1, refcost: 10, refprice: 25, isbase: 1 }, ...])
+    def update_uoms(uom_list)
+      uoms.delete_all
+      uom_list.each { |u| uoms.create!(u) }
+    end
+
+    # Safe barcode update — mirrors eStream SDK pattern (delete all, reinsert)
+    # Usage: item.update_barcodes([{ barcode: '123456', uom: 'PCS' }, ...])
+    def update_barcodes(barcode_list)
+      barcodes.delete_all
+      barcode_list.each { |b| barcodes.create!(b) }
+    end
+
+
+    private
+
+    # Prevent deletion if item has been used in any transaction document.
+    # SQL Account itself enforces this at the app layer — we mirror it here.
+    # TODO: expand check to all document detail tables once modeled
+    # (sl_iv dtl, sl_do dtl, ph_gr dtl, st_aj dtl, st_xf dtl, etc.)
+    def check_not_used_in_transactions
+      if used_in_transactions?
+        errors.add(:base, "Cannot delete stock item '#{code}' — it has been used in transaction documents")
+        throw(:abort)
+      end
+    end
+
+    def used_in_transactions?
+      # Placeholder — returns false until document tables are fully modeled.
+      # Once SL_IV, PH_GR, ST_AJ etc. are mapped, add checks like:
+      # SalesInvoiceLine.where(itemcode: code).exists? ||
+      # PurchaseGoodReceiptLine.where(itemcode: code).exists?
+      false
+    end
 
   end
 end
