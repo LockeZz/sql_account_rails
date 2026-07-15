@@ -37,7 +37,7 @@ module SqlAccount
       foreign_key: 'code',
       primary_key: 'code'
 
-    has_many :item_listings -> { where(ctype: 'S') },
+    has_many :item_listings, -> { where(ctype: 'S') },
       class_name: 'SqlAccount::StockItemCompany',
       foreign_key: 'company',
       primary_key: 'code'
@@ -46,7 +46,7 @@ module SqlAccount
       class_name: 'SqlAccount::StockItem',
       source: :stock_item
 
-    has_many :item_prices -> { where(tagtype: 'S') },
+    has_many :item_prices, -> { where(tagtype: 'S') },
       class_name: 'SqlAccount::StockItemPrice',
       foreign_key: 'company',
       primary_key: 'code'
