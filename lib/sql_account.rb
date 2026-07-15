@@ -42,7 +42,11 @@ require_relative 'sql_account/resources/stock_assembly_line'
 require_relative 'sql_account/resources/stock_adjustment'
 require_relative 'sql_account/resources/stock_adjustment_line'
 
-# Invoice
+# Purchase
+require_relative 'sql_account/resources/purchase_request'
+require_relative 'sql_account/resources/purchase_request_line'
+require_relative 'sql_account/resources/purchase_document'
+require_relative 'sql_account/resources/purchase_document_line'
 require_relative "sql_account/resources/purchase_invoice"
 require_relative "sql_account/resources/purchase_invoice_line"
 
