@@ -51,6 +51,43 @@ module SqlAccount
       foreign_key: 'company',
       primary_key: 'code'
 
+
+    ### PURCHASING ASSOCIATION ###
+    has_many :purchase_requests,
+      class_name: 'SqlAccount::PurchaseRequest',
+      foreign_key: 'code',
+      primary_key: 'code'
+
+    has_many :purchase_orders,
+      class_name: 'SqlAccount::PurchaseOrder',
+      foreign_key: 'code',
+      primary_key: 'code'
+
+    has_many :goods_receiveds,
+      class_name: 'SqlAccount::PurchaseGoodsReceived',
+      foreign_key: 'code',
+      primary_key: 'code'
+
+    has_many :purchase_invoices,
+      class_name: 'SqlAccount::PurchaseInvoice',
+      foreign_key: 'code',
+      primary_key: 'code'
+
+    has_many :cash_purchases,
+      class_name: 'SqlAccount::CashPurchase',
+      foreign_key: 'code',
+      primary_key: 'code'
+
+    has_many :purchase_returns,
+      class_name: 'SqlAccount::PurchaseReturn',
+      foreign_key: 'code',
+      primary_key: 'code'
+
+    has_many :debit_notes,
+      class_name: 'SqlAccount::PurchaseDebitNote',
+      foreign_key: 'code',
+      primary_key: 'code'
+
     scope :active,   -> { where("TRIM(status) = 'A'") }
     scope :inactive, -> { where("TRIM(status) = 'I'") }
 
