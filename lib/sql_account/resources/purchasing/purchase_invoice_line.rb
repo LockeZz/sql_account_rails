@@ -3,6 +3,8 @@ module SqlAccount
     self.table_name = 'ph_pidtl'
     self.primary_key = 'dtlkey'
 
+    include SqlAccount::PurchaseDocumentLine
+
     belongs_to :purchase_invoice,
       class_name: 'SqlAccount::PurchaseInvoice',
       foreign_key: 'dockey',

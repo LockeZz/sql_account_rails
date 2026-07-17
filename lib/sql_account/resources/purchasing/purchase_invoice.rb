@@ -3,6 +3,8 @@ module SqlAccount
     self.table_name = 'ph_pi'
     self.primary_key = 'dockey'
 
+    include SqlAccount::PurchaseDocument
+
     belongs_to :supplier,
       class_name: 'SqlAccount::Supplier',
       foreign_key: 'code',
