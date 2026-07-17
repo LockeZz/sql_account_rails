@@ -21,6 +21,19 @@ module SqlAccount
       default_scope { select(column_names - %w[description3]) }
     end
 
+    FROMDOC_MAP = {
+      'PQ' => 'SqlAccount::PurchaseRequest',
+      'PO' => 'SqlAccount::PurchaseOrder',
+      'GR' => 'SqlAccount::GoodsReceived',
+      'PI' => 'SqlAccount::PurchaseInvoice',
+      'CP' => 'SqlAccount::CashPurchase',
+      'SC' => 'SqlAccount::PurchaseReturn',
+      'SD' => 'SqlAccount::DebitNote',
+      'PC' => 'SqlAccount::PurchaseCreditNote',
+      'EG' => 'SqlAccount::PurchaseExtraGoods',
+    }.freeze
+
+
     def has_tax?
       tax.present?
     end
@@ -35,6 +48,28 @@ module SqlAccount
 
     def has_source_doc?
       respond_to?(:fromdoctype) && fromdoctype.present?
+    end
+
+    def source_document
+      return nil unless respond_to?(:fromdoctype) && fromdoctype.present?
+      
+      klass = FROMDOC_MAP[fromdoctype.strip]
+      return nil unless klass
+
+      klass.constantize.find_by(dockey: fromdockey)
+    end
+
+    def source_line 
+      return nil unless respond_to?(:fromdtlkey) && fromdtlkey.present?
+      
+      klass = FROMDOC_MAP[fromdoctype&.strip]
+      return nil unless klass
+
+      line_class = "#{klass}Line".constantize
+      line_class.find_by(dtlkey: fromdtlkey)
+
+    rescue NameError
+      nil
     end
 
   end
