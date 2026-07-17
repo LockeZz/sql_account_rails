@@ -58,6 +58,12 @@ require_relative "sql_account/resources/purchasing/purchase_goods_receive"
 require_relative "sql_account/resources/purchasing/purchase_goods_receive_line"
 require_relative 'sql_account/resources/purchasing/purchase_return'
 require_relative 'sql_account/resources/purchasing/purchase_return_line'
+require_relative 'sql_account/resources/purchasing/cash_purchase'
+require_relative 'sql_account/resources/purchasing/cash_purchase_line'
+require_relative 'sql_account/resources/purchasing/purchase_debit_note'
+require_relative 'sql_account/resources/purchasing/purchase_debit_note_line'
+require_relative 'sql_account/resources/purchasing/purchase_credit_note'
+require_relative 'sql_account/resources/purchasing/purchase_credit_note_line'
 
 
 module SqlAccount
