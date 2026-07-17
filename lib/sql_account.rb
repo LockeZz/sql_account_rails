@@ -64,6 +64,8 @@ require_relative 'sql_account/resources/purchasing/purchase_debit_note'
 require_relative 'sql_account/resources/purchasing/purchase_debit_note_line'
 require_relative 'sql_account/resources/purchasing/purchase_credit_note'
 require_relative 'sql_account/resources/purchasing/purchase_credit_note_line'
+require_relative 'sql_account/resources/purchasing/purchase_extra_goods'
+require_relative 'sql_account/resources/purchasing/purchase_extra_goods_line'
 
 
 module SqlAccount
