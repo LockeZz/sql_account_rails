@@ -1,54 +1,57 @@
 # frozen_string_literal: true
 
-require "active_record"
 require "firebird_adapter"
+require "active_record"
+require 'active_support'
+require 'active_support/concern'
 require_relative "sql_account/version"
 require_relative "sql_account/configuration"
 require_relative "sql_account/connection"
 
+require_relative 'sql_account/concerns/purchase_document'
+require_relative 'sql_account/concerns/purchase_document_line'
+
+
 require_relative "sql_account/resources/record"
 
 # require_relative "sql_account/resources/customer"
-require_relative "sql_account/resources/supplier"
 
 # Supplier
-require_relative 'sql_account/resources/supplier'
-require_relative 'sql_account/resources/supplier_branch'
-require_relative 'sql_account/resources/supplier_bank_acc'
-require_relative 'sql_account/resources/supplier_cr_ctrl'
-require_relative 'sql_account/resources/supplier_tariff'
+require_relative 'sql_account/resources/supplier/supplier'
+require_relative 'sql_account/resources/supplier/supplier_branch'
+require_relative 'sql_account/resources/supplier/supplier_bank_acc'
+require_relative 'sql_account/resources/supplier/supplier_cr_ctrl'
+require_relative 'sql_account/resources/supplier/supplier_tariff'
 
 # Stock
-require_relative 'sql_account/resources/stock_item'
-require_relative 'sql_account/resources/stock_item_uom'
-require_relative 'sql_account/resources/stock_item_barcode'
-require_relative 'sql_account/resources/stock_item_bom'
-require_relative 'sql_account/resources/stock_item_alt'
-require_relative 'sql_account/resources/stock_item_category'
-require_relative 'sql_account/resources/stock_item_company'
-require_relative 'sql_account/resources/stock_item_price'
-require_relative 'sql_account/resources/stock_item_tpl'
-require_relative 'sql_account/resources/stock_item_tpldtl'
-require_relative 'sql_account/resources/stock_item_matrix'
-require_relative 'sql_account/resources/stock_item_batch'
-require_relative 'sql_account/resources/stock_item_ob'
-require_relative 'sql_account/resources/stock_transaction'
-require_relative 'sql_account/resources/stock_transaction_wma'
-require_relative "sql_account/resources/stock_category"
-require_relative 'sql_account/resources/stock_group'
-require_relative 'sql_account/resources/stock_batch'
-require_relative 'sql_account/resources/stock_assembly'
-require_relative 'sql_account/resources/stock_assembly_line'
-require_relative 'sql_account/resources/stock_adjustment'
-require_relative 'sql_account/resources/stock_adjustment_line'
+require_relative 'sql_account/resources/stock/stock_item'
+require_relative 'sql_account/resources/stock/stock_item_uom'
+require_relative 'sql_account/resources/stock/stock_item_barcode'
+require_relative 'sql_account/resources/stock/stock_item_bom'
+require_relative 'sql_account/resources/stock/stock_item_alt'
+require_relative 'sql_account/resources/stock/stock_item_category'
+require_relative 'sql_account/resources/stock/stock_item_company'
+require_relative 'sql_account/resources/stock/stock_item_price'
+require_relative 'sql_account/resources/stock/stock_item_tpl'
+require_relative 'sql_account/resources/stock/stock_item_tpldtl'
+require_relative 'sql_account/resources/stock/stock_item_matrix'
+require_relative 'sql_account/resources/stock/stock_item_batch'
+require_relative 'sql_account/resources/stock/stock_item_ob'
+require_relative 'sql_account/resources/stock/stock_transaction'
+require_relative 'sql_account/resources/stock/stock_transaction_wma'
+require_relative "sql_account/resources/stock/stock_category"
+require_relative 'sql_account/resources/stock/stock_group'
+require_relative 'sql_account/resources/stock/stock_batch'
+require_relative 'sql_account/resources/stock/stock_assembly'
+require_relative 'sql_account/resources/stock/stock_assembly_line'
+require_relative 'sql_account/resources/stock/stock_adjustment'
+require_relative 'sql_account/resources/stock/stock_adjustment_line'
 
 # Purchase
-require_relative 'sql_account/resources/purchase_request'
-require_relative 'sql_account/resources/purchase_request_line'
-require_relative 'sql_account/resources/purchase_document'
-require_relative 'sql_account/resources/purchase_document_line'
-require_relative "sql_account/resources/purchase_invoice"
-require_relative "sql_account/resources/purchase_invoice_line"
+require_relative 'sql_account/resources/purchasing/purchase_request'
+require_relative 'sql_account/resources/purchasing/purchase_request_line'
+require_relative "sql_account/resources/purchasing/purchase_invoice"
+require_relative "sql_account/resources/purchasing/purchase_invoice_line"
 
 module SqlAccount
   class << self 
