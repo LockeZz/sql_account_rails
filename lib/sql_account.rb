@@ -50,8 +50,15 @@ require_relative 'sql_account/resources/stock/stock_adjustment_line'
 # Purchase
 require_relative 'sql_account/resources/purchasing/purchase_request'
 require_relative 'sql_account/resources/purchasing/purchase_request_line'
+require_relative 'sql_account/resources/purchasing/purchase_order'
+require_relative 'sql_account/resources/purchasing/purchase_order_line'
 require_relative "sql_account/resources/purchasing/purchase_invoice"
 require_relative "sql_account/resources/purchasing/purchase_invoice_line"
+require_relative "sql_account/resources/purchasing/purchase_goods_receive"
+require_relative "sql_account/resources/purchasing/purchase_goods_receive_line"
+require_relative 'sql_account/resources/purchasing/purchase_return'
+require_relative 'sql_account/resources/purchasing/purchase_return_line'
+
 
 module SqlAccount
   class << self 
