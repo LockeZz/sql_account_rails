@@ -10,6 +10,12 @@ module SqlAccount
         primary_key: 'code',
         optional: true # some docs may not have a registered supplier
 
+      belongs_to :project,
+        class_name: 'SqlAccount::Project',
+        foreign_key: 'project',
+        primary_key: 'code',
+        optional: true # '----' = no project
+
       scope :active, -> { where(cancelled: false) }
       scope :cancelled, -> { where(cancelled: true) }
       scope :transferable, -> { where(transferable: true) }
@@ -19,7 +25,7 @@ module SqlAccount
       scope :for_project, -> (proj) { where(project: proj) }
       scope :for_currency, -> (curr) { where(currencycode: curr) }
 
-      after_destroy :not_gl_reversal_required
+      after_destroy :note_gl_reversal_required
 
       validates :docno, presence: true
       validates :docdate, presence: true

@@ -13,7 +13,7 @@ require_relative 'sql_account/concerns/purchase_document_line'
 
 
 require_relative "sql_account/resources/record"
-
+require_relative "sql_account/resources/project/project"
 # require_relative "sql_account/resources/customer"
 
 # Supplier

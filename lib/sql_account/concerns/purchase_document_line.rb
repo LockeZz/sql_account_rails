@@ -9,6 +9,12 @@ module SqlAccount
         primary_key: 'code',
         optional: true
 
+      belongs_to :project,
+        class_name: 'SqlAccount::Project',
+        foreign_key: 'project',
+        primary_key: 'code',
+        optional: true
+
       scope :for_item, -> (code) { where(itemcode: code) }
       scope :for_location, -> (loc) { where(location: loc) }
       scope :for_batch, -> (b) { where(batch: b) }
@@ -48,6 +54,10 @@ module SqlAccount
 
     def has_source_doc?
       respond_to?(:fromdoctype) && fromdoctype.present?
+    end
+
+    def amount_with_tax
+      (amount || 0) + (taxamt || 0)
     end
 
     def source_document
