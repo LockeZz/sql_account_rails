@@ -16,6 +16,10 @@ require_relative "sql_account/resources/record"
 require_relative "sql_account/resources/project/project"
 # require_relative "sql_account/resources/customer"
 
+# Fixed Asset
+require_relative "sql_account/resources/fixed_asset/fa_di_project"
+require_relative "sql_account/resources/fixed_asset/fa_item_project"
+
 # Supplier
 require_relative 'sql_account/resources/supplier/supplier'
 require_relative 'sql_account/resources/supplier/supplier_branch'
