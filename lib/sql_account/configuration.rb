@@ -1,7 +1,7 @@
 module SqlAccount
   class Configuration
 
-    attr_accessor :host, :port, :database, :username, :password, :encoding
+    attr_accessor :host, :port, :database, :username, :password, :encoding, :pool, :checkout_timeout, :idle_timeout
 
     def initialize
       @port = 3050
