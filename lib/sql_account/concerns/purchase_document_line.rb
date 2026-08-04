@@ -15,6 +15,12 @@ module SqlAccount
         primary_key: 'code',
         optional: true
 
+      belongs_to :gl_acount,
+        class_name: 'SqlAccount::GlAccount',
+        foreign_key: 'account',
+        primary_key: 'code',
+        optional: true
+
       scope :for_item, -> (code) { where(itemcode: code) }
       scope :for_location, -> (loc) { where(location: loc) }
       scope :for_batch, -> (b) { where(batch: b) }
@@ -58,6 +64,10 @@ module SqlAccount
 
     def amount_with_tax
       (amount || 0) + (taxamt || 0)
+    end
+
+    def has_project?
+      respond_to?(:project) && project.present? && project != '----'
     end
 
     def source_document

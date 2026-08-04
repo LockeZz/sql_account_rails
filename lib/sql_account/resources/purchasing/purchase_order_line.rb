@@ -10,6 +10,12 @@ module SqlAccount
       foreign_key: 'dockey',
       primary_key: 'dockey'
 
+    belongs_to :udf_account,
+      class_name: 'SqlAccount::GlAccount',
+      foreign_key: 'udf_account',
+      primary_key: 'code',
+      optional: true
+
     validates :seq,       presence: true, numericality: { only_integer: true, greater_than: 0 }
     validates :qty,       presence: true, numericality: true
     validates :uom,       presence: true
