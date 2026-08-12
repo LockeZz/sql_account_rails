@@ -16,6 +16,9 @@ require_relative "sql_account/resources/record"
 require_relative "sql_account/resources/project/project"
 # require_relative "sql_account/resources/customer"
 
+require_relative "sql_account/resources/system/audit"
+require_relative "sql_account/resources/system/audit_dtl"
+
 require_relative "sql_account/resources/general_ledger/gl_account"
 
 # Fixed Asset
