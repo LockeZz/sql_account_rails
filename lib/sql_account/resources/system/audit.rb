@@ -1,7 +1,7 @@
 module SqlAccount
   class Audit < Record 
 
-    self.table_name = "audt"
+    self.table_name = "audit"
     self.primary_key = "dockey"
 
     has_many :details,
