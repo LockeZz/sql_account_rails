@@ -6,8 +6,6 @@ module SqlAccount
 
     include SqlAccount::SalesDocument
 
-    self.sql_account_module = SqlAccount::Audit::MODULE_SL
-
     has_many :lines,
       class_name: 'SqlAccount::SalesInvoiceLine',
       foreign_key: 'dockey',

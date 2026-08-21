@@ -7,7 +7,7 @@ module SqlAccount
         class_name: 'SqlAccount::Customer',
         foreign_key: 'code',
         primary_key: 'code',
-        optiona: true
+        optional: true
 
       belongs_to :project,
         class_name: 'SqlAccount::Project',

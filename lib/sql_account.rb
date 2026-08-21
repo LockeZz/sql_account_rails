@@ -78,8 +78,8 @@ require_relative 'sql_account/resources/purchasing/purchase_extra_goods'
 require_relative 'sql_account/resources/purchasing/purchase_extra_goods_line'
 
 # Sales
-require_relative 'sql_account/resources/sales/sales_order'
-require_relative 'sql_account/resources/sales/sales_order_line'
+require_relative 'sql_account/resources/sales/sales_invoice'
+require_relative 'sql_account/resources/sales/sales_invoice_line'
 
 
 module SqlAccount
