@@ -10,7 +10,8 @@ require_relative "sql_account/connection"
 
 require_relative 'sql_account/concerns/purchase_document'
 require_relative 'sql_account/concerns/purchase_document_line'
-
+require_relative 'sql_account/concerns/sales_document'
+require_relative 'sql_account/concerns/sales_document_line'
 
 require_relative "sql_account/resources/record"
 require_relative "sql_account/resources/project/project"
@@ -75,6 +76,10 @@ require_relative 'sql_account/resources/purchasing/purchase_credit_note'
 require_relative 'sql_account/resources/purchasing/purchase_credit_note_line'
 require_relative 'sql_account/resources/purchasing/purchase_extra_goods'
 require_relative 'sql_account/resources/purchasing/purchase_extra_goods_line'
+
+# Sales
+require_relative 'sql_account/resources/sales/sales_order'
+require_relative 'sql_account/resources/sales/sales_order_line'
 
 
 module SqlAccount
