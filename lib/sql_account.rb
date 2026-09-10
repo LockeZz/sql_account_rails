@@ -12,6 +12,7 @@ require_relative 'sql_account/concerns/purchase_document'
 require_relative 'sql_account/concerns/purchase_document_line'
 require_relative 'sql_account/concerns/sales_document'
 require_relative 'sql_account/concerns/sales_document_line'
+require_relative 'sql_account/concerns/date_validation'
 
 require_relative "sql_account/resources/record"
 require_relative "sql_account/resources/project/project"
@@ -19,6 +20,7 @@ require_relative "sql_account/resources/project/project"
 
 require_relative "sql_account/resources/system/audit"
 require_relative "sql_account/resources/system/audit_dtl"
+require_relative "sql_account/resources/system/transaction_allow_date"
 
 require_relative "sql_account/resources/general_ledger/gl_account"
 
