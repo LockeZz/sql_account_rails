@@ -10,6 +10,21 @@ module SqlAccount
 
     default_scope { select(column_names - %w[attachments]) }
 
+    has_many :customer_payments,
+      class_name: 'SqlAccount::CustomerPayment',
+      foreign_key: 'project',
+      primary_key: 'code'
+
+    has_many :fa_item_projects,
+      class_name: 'SqlAccount::FaItemProject',
+      foreign_key: 'project',
+      primary_key: 'code'
+ 
+    has_many :fa_di_projects,
+      class_name: 'SqlAccount::FaDiProject',
+      foreign_key: 'project',
+      primary_key: 'code'
+
     # columns:
     # (1 Unknown computed col)
     # code          - Project Code (PK, '----' = NON-PROJECT default)
