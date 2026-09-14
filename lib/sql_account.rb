@@ -83,6 +83,11 @@ require_relative 'sql_account/resources/purchasing/purchase_extra_goods_line'
 require_relative 'sql_account/resources/sales/sales_invoice'
 require_relative 'sql_account/resources/sales/sales_invoice_line'
 
+# Customers
+require_relative 'sql_account/resources/customer/customer'
+require_relative 'sql_account/resources/customer/customer_payment'
+require_relative 'sql_account/resources/customer/customer_branch'
+require_relative 'sql_account/resources/customer/customer_bank_acc'
 
 module SqlAccount
   class << self 

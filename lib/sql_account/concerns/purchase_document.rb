@@ -3,6 +3,9 @@ module SqlAccount
     extend ActiveSupport::Concern
 
     included do
+      include SqlAccount::Auditable
+      include SqlAccount::DateValidation
+      
       # ── Supplier association ──────────────────────────────────────
       belongs_to :supplier,
         class_name: 'SqlAccount::Supplier',
@@ -48,6 +51,10 @@ module SqlAccount
 
     def transferable?
       tranferable == true
+    end
+
+    def has_project?
+      project.present? && project != '----'
     end
 
     private 

@@ -4,6 +4,8 @@ module SqlAccount
     self.primary_key = 'dockey'
 
     include SqlAccount::PurchaseDocument
+    include SqlAccount::Auditable
+    self.sql_account_module = SqlAccount::Audit::MODULE_PH
 
     has_many :lines,
       class_name: 'SqlAccount::PurchaseOrderLine',
