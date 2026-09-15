@@ -5,8 +5,9 @@ module SqlAccount
     included do
       include SqlAccount::Auditable
       include SqlAccount::DateValidation
+
+      self.sql_account_module = SqlAccount::Audit::MODULE_PH
       
-      # ── Supplier association ──────────────────────────────────────
       belongs_to :supplier,
         class_name: 'SqlAccount::Supplier',
         foreign_key: 'code',

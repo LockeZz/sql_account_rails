@@ -12,7 +12,7 @@ module SqlAccount
       foreign_key: 'dockey',
       primary_key: 'dockey',
       dependent: :destroy
-
+    
     # traceability — PO can originate from a Purchase Request
     scope :from_request, -> { joins(:lines).where("ph_podtl.fromdoctype = 'PQ'").distinct }
 

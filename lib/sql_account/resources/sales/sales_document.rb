@@ -79,8 +79,6 @@ module SqlAccount
         "GL postings were NOT automatically reversed. Verify ledger balances manually."
       )
     end
-
-    end
   
   end
 end
