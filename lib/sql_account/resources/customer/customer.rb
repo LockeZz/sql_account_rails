@@ -13,7 +13,17 @@ module SqlAccount
       class_name: 'SqlAccount::CustomerBankAcc',
       foreign_key: 'code',
       primary_key: 'code'
-    
+
+    has_many :credit_controls,
+      class_name: 'SqlAccount::CustomerCrCtrl',
+      foreign_key: 'code', 
+      primary_key: 'code'
+
+    has_many :tariffs,
+      class_name: 'SqlAccount::CustomerTariff',
+      foreign_key: 'code', 
+      primary_key: 'code'
+
     has_one :billing_branch, -> { where("TRIM(branchtype) = 'B'") },
       class_name: 'SqlAccount::CustomerBranch',
       foreign_key: 'code',
