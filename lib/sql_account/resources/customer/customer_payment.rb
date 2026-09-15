@@ -16,6 +16,10 @@ module SqlAccount
       primary_key: 'code',
       optional: true
 
+    has_many :knockoffs,
+      class_name: 'SqlAccount::CustomerKnockoff',
+      foreign_key: 'fromdockey',
+      primary_key: 'dockey'
 
 
     # columns:

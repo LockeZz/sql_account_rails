@@ -90,6 +90,8 @@ require_relative 'sql_account/resources/customer/customer_branch'
 require_relative 'sql_account/resources/customer/customer_bank_acc'
 require_relative 'sql_account/resources/customer/customer_cr_ctrl'
 require_relative 'sql_account/resources/customer/customer_tariff'
+require_relative 'sql_account/resources/customer/customer_knockoff'
+
 
 module SqlAccount
   class << self 

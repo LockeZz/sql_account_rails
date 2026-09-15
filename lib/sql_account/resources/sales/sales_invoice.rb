@@ -12,29 +12,39 @@ module SqlAccount
       primary_key: 'dockey',
       dependent: :destroy
 
-      # before_destroy :check_not_knocked_off
+    has_many :knockoffs,
+      class_name: 'SqlAccount::CustomerKnockoff'
+      foreign_key: 'todockey',
+      primary_key: 'dockey'
 
-      def update_lines(line_list)
-        lines.delete_all
-        line_list.each_with_index { |l, i| lines.create!(l.merge(seq: l[:seq] || i + 1)) }
-      end
+    has_many :payments, through: :knockoffs,
+      class_name: 'SqlAccount::CustomerPayment',
+      source: :customer_payment
 
-      # private
-  
-      # def check_not_knocked_off
-      #   if knocked_off?
-      #     errors.add(:base, "Cannot delete Sales Invoice '#{docno}' — it has been knocked off by a Payment or Credit Note")
-      #     throw(:abort)
-      #   end
-      # end
+    before_destroy :check_not_knocked_off
 
-      # def knocked_off?
-      #   SqlAccount::Record.connection.execute(
-      #     "SELECT FIRST 1 1 FROM ar_knockoff WHERE dockey2 = #{dockey}"
-      #   ).first.present?
-      # rescue
-      #   false
-      # end
+    
+    def update_lines(line_list)
+      lines.delete_all
+      line_list.each_with_index { |l, i| lines.create!(l.merge(seq: l[:seq] || i + 1)) }
+    end
+
+    # private
+
+    # def check_not_knocked_off
+    #   if knocked_off?
+    #     errors.add(:base, "Cannot delete Sales Invoice '#{docno}' — it has been knocked off by a Payment or Credit Note")
+    #     throw(:abort)
+    #   end
+    # end
+
+    # def knocked_off?
+    #   SqlAccount::Record.connection.execute(
+    #     "SELECT FIRST 1 1 FROM ar_knockoff WHERE dockey2 = #{dockey}"
+    #   ).first.present?
+    # rescue
+    #   false
+    # end
 
     # extra columns specific to SL_IV (on top of shared header):
     # eiv_utc/eiv_received_utc/eiv_validated_utc - e-Invoice timestamps
