@@ -17,7 +17,6 @@ require_relative 'sql_account/concerns/auditable'
 
 require_relative "sql_account/resources/record"
 require_relative "sql_account/resources/project/project"
-# require_relative "sql_account/resources/customer"
 
 require_relative "sql_account/resources/system/audit"
 require_relative "sql_account/resources/system/audit_dtl"
@@ -89,6 +88,8 @@ require_relative 'sql_account/resources/customer/customer'
 require_relative 'sql_account/resources/customer/customer_payment'
 require_relative 'sql_account/resources/customer/customer_branch'
 require_relative 'sql_account/resources/customer/customer_bank_acc'
+require_relative 'sql_account/resources/customer/customer_cr_ctrl'
+require_relative 'sql_account/resources/customer/customer_tariff'
 
 module SqlAccount
   class << self 
