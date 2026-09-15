@@ -13,7 +13,71 @@ module SqlAccount
       class_name: 'SqlAccount::CustomerBankAcc',
       foreign_key: 'code',
       primary_key: 'code'
+    
+    has_one :billing_branch, -> { where("TRIM(branchtype) = 'B'") },
+      class_name: 'SqlAccount::CustomerBranch',
+      foreign_key: 'code',
+      primary_key: 'code'
 
+    has_one :delivery_branch, -> { where("TRIM(branchtype) = 'D'") },
+      class_name: 'SqlAccount::CustomerBranch',
+      foreign_key: 'code',
+      primary_key: 'code'
+
+    has_many :item_listings, -> { where(ctype: 'C') },
+      class_name: 'SqlAccount::StockItemCompany',
+      foreign_key: 'company',
+      primary_key: 'code'
+
+    has_many :purchased_items, through: :item_listings,
+      class_name: 'SqlAccount::StockItem',
+      source: :stock_item
+
+    has_many :item_prices, -> { where(tagtype: 'C') },
+      class_name: 'SqlAccount::StockItemPrice',
+      foreign_key: 'company',
+      primary_key: 'code'
+
+    has_many :sales_invoices,
+      class_name: 'SqlAccount::SalesInvoice',
+      foreign_key: 'code',
+      primary_key: 'code'
+
+    has_many :payments,
+      class_name: 'SqlAccount::CustomerPayment',
+      foreign_key: 'code',
+      primary_key: 'code'
+
+    scope :active, -> { where("TRIM(status) = 'A'") }
+    scope :inactive, -> { where("TRIM(status) = 'I'") }
+    scope :overdue, -> { where('outstanding > overduelimit') }
+    scope :over_limit, -> { where(allowexceedcreditlimit: false).where("outstanding > creditlimit") }
+
+    validates :code, presence: true
+    validates :companyname, presence: true
+
+    # exclude heavy binary columns by default
+    default_scope { select(column_names - %w[attachments note]) }
+
+    def active?
+      status.strip == 'A'
+    end
+
+    def over_credit_limit?
+      !allowexceedcreditlimit && outstanding.to_d > creditlimit.to_d 
+    end
+
+    def over_overdue_limit?
+      outstanding.to_d > overduelimit.to_d
+    end
+
+    def aging_by_invoice?
+      agingon.strip == 'I'
+    end
+
+    def aging_by_payment?
+      agingon.strip == 'P'
+    end
 
     # columns:
     # (2 Unknown computed cols)
