@@ -8,6 +8,12 @@ module SqlAccount
       foreign_key: 'itemcode',
       primary_key: 'code'
 
+    belongs_to :project,
+      class_name: 'SqlAccount::Project',
+      foreign_key: 'project',
+      primary_key: 'code',
+      optional: true
+      
     has_many :lines,
       class_name: 'SqlAccount::StockAssemblyLine',
       foreign_key: 'dockey',

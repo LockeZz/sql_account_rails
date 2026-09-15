@@ -21,7 +21,50 @@ module SqlAccount
       foreign_key: 'fromdockey',
       primary_key: 'dockey'
 
+    validates :docno,         presence: true
+    validates :code,          presence: true
+    validates :docdate,       presence: true
+    validates :postdate,      presence: true
+    validates :paymentmethod, presence: true
+    validates :docamt,        presence: true, numericality: { greater_than: 0 }
 
+    scope :active,         -> { where(cancelled: false) }
+    scope :cancelled,      -> { where(cancelled: true) }
+    scope :bounced,        -> { where.not(bounceddate: nil) }
+    scope :non_refundable, -> { where(nonrefundable: true) }
+    scope :for_customer,   ->(code)     { where(code: code) }
+    scope :by_date,        ->(date)     { where(docdate: date) }
+    scope :between,        ->(from, to) { where(docdate: from..to) }
+    scope :for_project,    ->(proj)     { where(project: proj) }
+    scope :unallocated,    -> { where('unappliedamt > 0') }
+    scope :fully_applied,  -> { where(unappliedamt: 0) }
+
+    default_scope { select(column_names - %w[attachments note approvestate]) }
+
+    def cancelled?
+      cancelled == true
+    end
+
+    def cancel!
+      update!(cancelled: true)
+    end
+
+    def bounced?
+      bounceddate.present?
+    end
+
+    def fully_applied?
+      unappliedamt.to_d == 0
+    end
+
+    def unapplied_amount
+      unappliedamt.to_d
+    end
+
+    def multi_currency?
+      currencycode.present? && currencycode != '----'
+    end
+    
     # columns:
     # (2 Unknown computed cols)
     # dockey            - Primary Key

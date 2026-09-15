@@ -3,6 +3,12 @@ module SqlAccount
     self.table_name = 'st_aj'
     self.primary_key = 'dockey'
 
+    belongs_to :project,
+      class_name: 'SqlAccount::Project',
+      foreign_key: 'project',
+      primary_key: 'code',
+      optional: true
+      
     has_many :lines,
       class_name: 'SqlAccount::StockAdjustmentLine',
       foreign_key: 'dockey',

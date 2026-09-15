@@ -8,6 +8,12 @@ module SqlAccount
       foreign_key: 'itemcode',
       primary_key: 'code'
 
+    belongs_to :project,
+      class_name: 'SqlAccount::Project',
+      foreign_key: 'project',
+      primary_key: 'code',
+      optional: true
+
     # scopes
     scope :for_item,     ->(code)     { where(itemcode: code) }
     scope :as_of,        ->(date)     { where("postdate <= ?", date) }
