@@ -23,6 +23,7 @@ require_relative "sql_account/resources/system/audit_dtl"
 require_relative "sql_account/resources/system/transaction_allow_date"
 
 require_relative "sql_account/resources/general_ledger/gl_account"
+require_relative "sql_account/resources/general_ledger/journal"
 
 # Fixed Asset
 require_relative "sql_account/resources/fixed_asset/fa_di_project"

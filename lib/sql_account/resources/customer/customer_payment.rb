@@ -16,10 +16,17 @@ module SqlAccount
       primary_key: 'code',
       optional: true
 
+    belongs_to :journal,
+      class_name: 'SqlAccount::Journal',
+      foreign_key: 'journal',
+      primary_key: 'code',
+      optional: true
+
     has_many :knockoffs,
       class_name: 'SqlAccount::CustomerKnockoff',
       foreign_key: 'fromdockey',
       primary_key: 'dockey'
+      
 
     validates :docno,         presence: true
     validates :code,          presence: true
