@@ -13,7 +13,7 @@ module SqlAccount
       dependent: :destroy
 
     has_many :knockoffs,
-      class_name: 'SqlAccount::CustomerKnockoff'
+      class_name: 'SqlAccount::CustomerKnockoff',
       foreign_key: 'todockey',
       primary_key: 'dockey'
 
