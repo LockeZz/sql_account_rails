@@ -15,6 +15,11 @@ module SqlAccount
       foreign_key: 'parent',
       primary_key: 'docket'
 
+    has_many :customer_payments,
+      class_name: 'SqlAccount::CustomerPayment',
+      foreign_key: 'paymentmethod',
+      primary_key: 'code'
+
     scope :top_level, -> { where(parent: -1) }
     scope :by_type, -> (type) { where("TRIM(acctype) = ?", type)}
     scope :capital, -> { by_type('CP') }

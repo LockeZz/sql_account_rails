@@ -21,6 +21,12 @@ module SqlAccount
       foreign_key: 'journal',
       primary_key: 'code',
       optional: true
+    
+    belongs_to :received_bank,
+      class_name: 'SqlAccount::GlAccount',
+      foreign_key: 'paymentmethod',
+      primary_key: 'code',
+      optional: true
 
     has_many :knockoffs,
       class_name: 'SqlAccount::CustomerKnockoff',
