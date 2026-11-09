@@ -6,7 +6,7 @@ module SqlAccount
     include SqlAccount::PurchaseDocument
 
     has_many :lines,
-      class_name: 'SqlAccount::DebitNoteLine',
+      class_name: 'SqlAccount::PurchaseDebitNoteLine',
       foreign_key: 'dockey',
       primary_key: 'dockey',
       dependent: :destroy

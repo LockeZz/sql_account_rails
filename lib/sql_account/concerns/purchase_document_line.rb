@@ -36,11 +36,11 @@ module SqlAccount
     FROMDOC_MAP = {
       'PQ' => 'SqlAccount::PurchaseRequest',
       'PO' => 'SqlAccount::PurchaseOrder',
-      'GR' => 'SqlAccount::GoodsReceived',
+      'GR' => 'SqlAccount::PurchaseGoodsReceived',
       'PI' => 'SqlAccount::PurchaseInvoice',
       'CP' => 'SqlAccount::CashPurchase',
       'SC' => 'SqlAccount::PurchaseReturn',
-      'SD' => 'SqlAccount::DebitNote',
+      'SD' => 'SqlAccount::PurchaseDebitNote',
       'PC' => 'SqlAccount::PurchaseCreditNote',
       'EG' => 'SqlAccount::PurchaseExtraGoods',
     }.freeze

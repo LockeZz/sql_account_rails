@@ -6,7 +6,7 @@ module SqlAccount
     include SqlAccount::PurchaseDocumentLine
 
     belongs_to :debit_note,
-      class_name: 'SqlAccount::DebitNote',
+      class_name: 'SqlAccount::PurchaseDebitNote',
       foreign_key: 'dockey',
       primary_key: 'dockey'
 

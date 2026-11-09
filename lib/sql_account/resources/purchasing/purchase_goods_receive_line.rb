@@ -6,7 +6,7 @@ module SqlAccount
     include SqlAccount::PurchaseDocumentLine
 
     belongs_to :goods_received,
-      class_name: 'SqlAccount::GoodsReceived',
+      class_name: 'SqlAccount::PurchaseGoodsReceived',
       foreign_key: 'dockey',
       primary_key: 'dockey'
 

@@ -6,7 +6,7 @@ module SqlAccount
     include SqlAccount::PurchaseDocument
 
     has_many :lines,
-      class_name: 'SqlAccount::GoodsReceivedLine',
+      class_name: 'SqlAccount::PurchaseGoodsReceivedLine',
       foreign_key: 'dockey',
       primary_key: 'dockey',
       dependent: :destroy
