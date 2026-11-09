@@ -9,11 +9,15 @@ module SqlAccount
       primary_key: 'dockey',
       optional: true
 
-    belongs_to :sales_invoice,
-      class_name: 'SqlAccount::SalesInvoice',
+    belongs_to :customer_invoice,
+      class_name: 'SqlAccount::CustomerInvoice',
       foreign_key: 'todockey',
       primary_key: 'dockey',
       optional: true
+
+    def sales_invoice
+      customer_invoice&.sales_invoice
+    end
 
     scope :from_payment,  -> { where(fromdoctype: 'PM') }
     scope :from_cn,       -> { where(fromdoctype: 'CN') } 

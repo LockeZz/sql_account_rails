@@ -14,18 +14,42 @@ module SqlAccount
       primary_key: 'dockey',
       dependent: :destroy
 
-    has_many :knockoffs,
-      class_name: 'SqlAccount::CustomerKnockoff',
-      foreign_key: 'todockey',
-      primary_key: 'dockey'
+    # has_many :knockoffs,
+    #   class_name: 'SqlAccount::CustomerKnockoff',
+    #   foreign_key: 'todockey',
+    #   primary_key: 'dockey'
 
-    has_many :payments, through: :knockoffs,
-      class_name: 'SqlAccount::CustomerPayment',
-      source: :customer_payment
+    # has_many :payments, through: :knockoffs,
+    #   class_name: 'SqlAccount::CustomerPayment',
+    #   source: :customer_payment
 
     # before_destroy :check_not_knocked_off
 
-    
+    def customer_invoice 
+      @customer_invoice ||= SqlAccount::CustomerInvoice.find_by(docno: docno, code: code)
+    end
+
+    def reload(*)
+      @customer_invoice = nil
+      super
+    end
+
+    def knockoffs
+      customer_invoice ? customer_invoice.knockoffs : SqlAccount::CustomerKnockoff.none
+    end
+
+    def payments
+      customer_invoice ? customer_invoice.payments : SqlAccount::CustomerPayment.none
+    end
+
+    def outstanding_amount
+      customer_invoice&.outstanding_amount
+    end
+
+    def fully_settled?
+      !customer_invoice.nil? && customer_invoice.fully_settled?
+    end
+
     def update_lines(line_list)
       lines.delete_all
       line_list.each_with_index { |l, i| lines.create!(l.merge(seq: l[:seq] || i + 1)) }

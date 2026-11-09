@@ -95,6 +95,7 @@ require_relative 'sql_account/resources/customer/customer_bank_acc'
 require_relative 'sql_account/resources/customer/customer_cr_ctrl'
 require_relative 'sql_account/resources/customer/customer_tariff'
 require_relative 'sql_account/resources/customer/customer_knockoff'
+require_relative 'sql_account/resources/customer/customer_invoice'
 
 
 module SqlAccount
