@@ -14,6 +14,7 @@ require_relative 'sql_account/concerns/sales_document'
 require_relative 'sql_account/concerns/sales_document_line'
 require_relative 'sql_account/concerns/date_validation'
 require_relative 'sql_account/concerns/auditable'
+require_relative 'sql_account/concerns/supplier_knockoff_guard'
 
 require_relative "sql_account/resources/record"
 require_relative "sql_account/resources/project/project"
@@ -35,6 +36,7 @@ require_relative 'sql_account/resources/supplier/supplier_branch'
 require_relative 'sql_account/resources/supplier/supplier_bank_acc'
 require_relative 'sql_account/resources/supplier/supplier_cr_ctrl'
 require_relative 'sql_account/resources/supplier/supplier_tariff'
+require_relative 'sql_account/resources/supplier/supplier_knockoff'
 
 # Stock
 require_relative 'sql_account/resources/stock/stock_item'
