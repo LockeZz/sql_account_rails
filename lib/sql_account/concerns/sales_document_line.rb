@@ -65,7 +65,7 @@ module SqlAccount
 
     def has_project?
       # respond_to?(:project) && project.present? && project != '----'
-          has_attribute?(:project) && self[:project].present? && self[:project] != '----'
+      has_attribute?(:project) && self[:project].present? && self[:project] != '----'
     end
 
     def gross_profit
@@ -75,7 +75,7 @@ module SqlAccount
 
 
     def source_document
-      return nil unless respond_to?(:from_doctype) && fromdoctype.present?
+      return nil unless respond_to?(:fromdoctype) && fromdoctype.present?
 
       klass = FROMDOC_MAP[fromdoctype.strip]
       return nil unless klass

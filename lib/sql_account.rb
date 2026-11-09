@@ -55,6 +55,7 @@ require_relative 'sql_account/resources/stock/stock_item_batch'
 require_relative 'sql_account/resources/stock/stock_item_ob'
 require_relative 'sql_account/resources/stock/stock_transaction'
 require_relative 'sql_account/resources/stock/stock_transaction_wma'
+require_relative 'sql_account/resources/stock/stock_transaction_fifo'
 require_relative "sql_account/resources/stock/stock_category"
 require_relative 'sql_account/resources/stock/stock_group'
 require_relative 'sql_account/resources/stock/stock_batch'

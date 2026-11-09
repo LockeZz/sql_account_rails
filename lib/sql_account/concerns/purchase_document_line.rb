@@ -51,7 +51,7 @@ module SqlAccount
     end
 
     def tax_inclusive?
-      tax_inclusive == true
+      taxinclusive == true
     end
 
     def transferable? 

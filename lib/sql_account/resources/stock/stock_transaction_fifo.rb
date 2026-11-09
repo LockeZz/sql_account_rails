@@ -15,8 +15,8 @@ module SqlAccount
 
     # scopes
     scope :for_item,   ->(code) { where(itemcode: code) }
-    scope :as_of,      ->(date) { where("postdate <= ?", date) }
-    scope :with_stock, ->       { where("qty <> 0") }
+    scope :as_of,      ->(date) { where("st_tr_fifo.postdate <= ?", date) }
+    scope :with_stock, ->       { where("st_tr_fifo.qty <> 0") }
     scope :latest_seq, ->       { where("seq = (SELECT MAX(b.seq) FROM st_tr_fifo b WHERE b.transno = st_tr_fifo.transno)") }
 
     # Cost types observed:
@@ -41,7 +41,7 @@ module SqlAccount
       scope = scope.where("st_tr.batch = ?", batch)       if batch
 
       # oldest unconsumed layer = lowest costseq with remaining qty
-      oldest_layer = scope.order("costseq ASC").first
+      oldest_layer = scope.order("st_tr_fifo.costseq ASC").first
       oldest_layer&.cost
     end
 
@@ -56,7 +56,7 @@ module SqlAccount
       scope = scope.where("st_tr.location = ?", location) if location
       scope = scope.where("st_tr.batch = ?", batch)       if batch
 
-      scope.order("costseq ASC").map do |layer|
+      scope.order("st_tr_fifo.costseq ASC").map do |layer|
         { costseq: layer.costseq, qty: layer.qty, cost: layer.cost, total: layer.qty * layer.cost }
       end
     end
