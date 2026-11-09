@@ -4,6 +4,8 @@ module SqlAccount
     self.primary_key = 'dockey'
 
     include SqlAccount::PurchaseDocument
+    include SqlAccount::SupplierKnockoffGuard
+    self.knockoff_doctype = "PI"
 
     belongs_to :supplier,
       class_name: 'SqlAccount::Supplier',
@@ -24,7 +26,7 @@ module SqlAccount
     validates :companyname, presence: true   # denormalized supplier name
 
     # callbacks
-    before_destroy :check_not_knocked_off
+    # before_destroy :check_not_knocked_off
     after_destroy  :note_gl_reversal_required
 
     # scopes
@@ -77,22 +79,22 @@ module SqlAccount
 
     # Prevent deletion if document has been knocked off by Payment or Credit Note
     # SDK comment: "Deleting only work if the record never not knock off by Payment or Credit Note"
-    def check_not_knocked_off
-      if knocked_off?
-        errors.add(:base, "Cannot delete Purchase Invoice '#{docno}' — it has been knocked off by a Payment or Credit Note")
-        throw(:abort)
-      end
-    end
+    # def check_not_knocked_off
+    #   if knocked_off?
+    #     errors.add(:base, "Cannot delete Purchase Invoice '#{docno}' — it has been knocked off by a Payment or Credit Note")
+    #     throw(:abort)
+    #   end
+    # end
 
-    def knocked_off?
-      # Check ap_knockoff table for any references to this dockey
-      # ap_knockoff links payments/credit notes to invoices
-      ActiveRecord::Base.connection.execute(<<~SQL).first.present?
-        SELECT FIRST 1 1 FROM ap_knockoff WHERE dockey2 = #{dockey}
-      SQL
-    rescue
-      false
-    end
+    # def knocked_off?
+    #   # Check ap_knockoff table for any references to this dockey
+    #   # ap_knockoff links payments/credit notes to invoices
+    #   ActiveRecord::Base.connection.execute(<<~SQL).first.present?
+    #     SELECT FIRST 1 1 FROM ap_knockoff WHERE dockey2 = #{dockey}
+    #   SQL
+    # rescue
+    #   false
+    # end
 
     def note_gl_reversal_required
       Rails.logger.warn(
