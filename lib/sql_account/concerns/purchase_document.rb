@@ -39,19 +39,20 @@ module SqlAccount
     end
 
     def cancelled?
-      cancelled = true
+      cancelled == true
     end
 
     def cancel!
       update!(cancelled: true)
     end
 
-    def mutli_currency?
+    def multi_currency?
       currencycode.present? && currencycode != "----"
     end
 
     def transferable?
-      tranferable == true
+      # tranferable == true
+      has_attribute?(:transferable) && self[:transferable] == true
     end
 
     def has_project?
