@@ -4,8 +4,6 @@ module SqlAccount
     self.primary_key = 'dockey'
 
     include SqlAccount::PurchaseDocument
-    include SqlAccount::SupplierKnockoffGuard
-    self.knockoff_doctype = 'PC'
 
     has_many :lines,
       class_name: 'SqlAccount::PurchaseCreditNoteLine',
