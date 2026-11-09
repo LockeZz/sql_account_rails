@@ -26,6 +26,8 @@ require_relative "sql_account/resources/system/transaction_allow_date"
 
 require_relative "sql_account/resources/general_ledger/gl_account"
 require_relative "sql_account/resources/general_ledger/journal"
+require_relative "sql_account/resources/general_ledger/cash_book_entry"
+require_relative "sql_account/resources/general_ledger/cash_book_entry_line"
 
 # Fixed Asset
 require_relative "sql_account/resources/fixed_asset/fa_di_project"
