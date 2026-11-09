@@ -71,7 +71,7 @@ module SqlAccount
     scope :active,   -> { where(isactive: true) }
     scope :inactive, -> { where(isactive: false) }
 
-    default_scope { select(column_names - %w[attachments]) }
+    self.ignored_columns = %w[attachments]
 
     # columns:
     # (1 Unknown computed col)

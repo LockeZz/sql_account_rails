@@ -13,7 +13,7 @@ module SqlAccount
     scope :inactive, -> { where(isactive: false) }
 
     # exclude giro blob by default
-    default_scope { select(column_names - %w[giro]) }
+    self.ignored_columns = %w[giro]
 
     # columns:
     # (1 Unknown computed col)

@@ -43,7 +43,7 @@ module SqlAccount
     scope :eiv_pending,    -> { where(irbm_uuid: nil) }
 
     # exclude heavy binary columns by default
-    default_scope { select(column_names - %w[attachments note approvestate]) }
+    self.ignored_columns = %w[attachments note approvestate]
 
     # Safe line update — mirrors eStream SDK pattern (delete all, reinsert)
     def update_lines(line_list)

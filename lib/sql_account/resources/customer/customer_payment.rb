@@ -52,7 +52,7 @@ module SqlAccount
     scope :unallocated,    -> { where('unappliedamt > 0') }
     scope :fully_applied,  -> { where(unappliedamt: 0) }
 
-    default_scope { select(column_names - %w[attachments note approvestate]) }
+    self.ignored_columns = %w[attachments note approvestate]
 
     def cancelled?
       cancelled == true

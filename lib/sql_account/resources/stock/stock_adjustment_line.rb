@@ -70,6 +70,6 @@ module SqlAccount
     end
 
     # exclude heavy binary columns by default
-    default_scope { select(column_names - %w[description3 approvestate]) }
+    self.ignored_columns = %w[description3 approvestate]
   end
 end

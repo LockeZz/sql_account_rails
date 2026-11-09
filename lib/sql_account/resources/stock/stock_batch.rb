@@ -24,7 +24,7 @@ module SqlAccount
     scope :valid,    -> { where("expdate IS NULL OR expdate >= ?", Date.today) }
 
     # exclude heavy binary columns by default
-    default_scope { select(column_names - %w[attachments]) }
+    self.ignored_columns = %w[attachments]
 
     # Partial delete of a specific item from batch — mirrors SDK pattern
     # (uses Locate + Delete, not delete-all-reinsert)

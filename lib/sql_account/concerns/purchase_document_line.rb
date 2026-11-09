@@ -30,7 +30,7 @@ module SqlAccount
       scope :with_tax, -> { where.not(tax: ['', nil]) }
       scope :from_doc, -> (type, key) { where(fromdoctype: type, fromdockey: key) }
 
-      default_scope { select(column_names - %w[description3]) }
+      self.ignored_columns = %w[description3]
     end
 
     FROMDOC_MAP = {

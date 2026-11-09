@@ -35,7 +35,7 @@ module SqlAccount
       validates :docdate, presence: true
       validates :postdate, presence: true
 
-      default_scope { select(column_names - %w[attachments note approvestate]) }
+      self.ignored_columns = %w[attachments note approvestate]
     end
 
     def cancelled?

@@ -101,7 +101,7 @@ module SqlAccount
     scope :normal_items,  -> { where(itemtype: '-') }
     
     # exclude heavy binary columns from default queries
-    default_scope { select(column_names - %w[picture attachments note description3]) }
+    self.ignored_columns = %w[picture attachments note description3]
     
 
     # Stock balance helpers — derived from ST_TR (stock transaction ledger)

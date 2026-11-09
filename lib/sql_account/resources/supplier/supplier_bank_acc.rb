@@ -12,7 +12,7 @@ module SqlAccount
     scope :inactive, -> { where(isactive: 'F') }
 
     # exclude binary columns
-    default_scope { select(column_names - %w[giro]) }
+    self.ignored_columns = %w[giro]
 
     validates :code,   presence: true
     validates :bank,   presence: true

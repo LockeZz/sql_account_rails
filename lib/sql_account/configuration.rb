@@ -15,6 +15,7 @@ module SqlAccount
       {
         adapter: 'firebird',
         host: host,
+        port: port && port.to_i,
         database: database, 
         username: username, 
         password: password, 

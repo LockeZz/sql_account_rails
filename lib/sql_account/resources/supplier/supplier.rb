@@ -95,7 +95,7 @@ module SqlAccount
     validates :companyname, presence: true
 
     # exclude heavy binary columns by default
-    default_scope { select(column_names - %w[attachments note]) }
+    self.ignored_columns = %w[attachments note]
 
   end
 end

@@ -37,7 +37,7 @@ module SqlAccount
     end
 
     # exclude heavy binary columns by default
-    default_scope { select(column_names - %w[description3]) }
+    self.ignored_columns = %w[description3]
 
     # columns:
     # (2 Unknown computed cols)

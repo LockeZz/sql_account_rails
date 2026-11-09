@@ -47,7 +47,7 @@ module SqlAccount
     scope :from_doc,    ->(type, key) { where(fromdoctype: type, fromdockey: key) }
 
     # exclude heavy binary columns by default
-    default_scope { select(column_names - %w[attachments note approvestate]) }
+    self.ignored_columns = %w[attachments note approvestate]
 
     # Safe line update — mirrors eStream SDK pattern (delete all, reinsert)
     # Usage: assembly.update_lines([{ seq: 1, itemcode: 'ANT', qty: 2, uom: 'UNIT' }, ...])

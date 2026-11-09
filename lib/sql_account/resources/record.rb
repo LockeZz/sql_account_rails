@@ -6,17 +6,40 @@ module SqlAccount
     def self.with_reconnect
       yield
     rescue => e
-      if connection_lost(e)
-        log_reconnect(e)
-        SqlAccount::Connection.establish!
-        yield
-      else
-        raise
-      end
+
+      raise unless connection_lost?(e)
+
+      log_reconnect(e)
+      SqlAccount::Connection.establish!
+      yield
+      
+      # if connection_lost(e)
+      #   log_reconnect(e)
+      #   SqlAccount::Connection.establish!
+      #   yield
+      # else
+      #   raise
+      # end
     end
 
+    # ActiveRecord wraps driver errors (ActiveRecord::StatementInvalid with the
+    # original Fb::Error as #cause), so the whole cause chain must be checked.
+    #
+    # Firebird SQL mistakes (bad syntax, unknown table/column) carry
+    # "SQL error code = -NNN"; retrying those cannot help, so they are excluded.
+    #
+    # INTERIM: the exact message of a genuinely dropped connection has not been
+    # captured yet. Once it has, narrow this to that message.
     def self.connection_lost?(error)
-      error.is_a?(Fb::Error)
+      # error.is_a?(Fb::Error)
+
+      while error
+        if error.is_a?(Fb::Error)
+          return !error.message.to_s.match?(/sql error code/i)
+        end
+        error = error.cause 
+      end
+      false 
     end
 
     def self.log_reconnect(error)
