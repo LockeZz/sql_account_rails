@@ -14,6 +14,12 @@ module SqlAccount
     # traceability — GR can originate from a PO
     scope :from_order,   -> { joins(:lines).where("ph_grdtl.fromdoctype = 'PO'").distinct }
 
+    def purchase_invoices
+      SqlAccount::PurchaseInvoice.where(
+        dockey: SqlAccount::PurchaseInvoiceLine.where(fromdoctype: 'GR', fromdockey: dockey).select(:dockey)
+      )
+    end
+
     def update_lines(line_list)
       lines.delete_all
       line_list.each_with_index { |l, i| lines.create!(l.merge(seq: l[:seq] || i + 1)) }

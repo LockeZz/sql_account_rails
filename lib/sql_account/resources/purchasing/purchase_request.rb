@@ -46,6 +46,12 @@ module SqlAccount
     # transferable     - Transferable flag (boolean)
     # updatecount/printcount/lastmodified
 
+    def purchase_orders
+      SqlAccount::PurchaseOrder.where(
+        dockey: SqlAccount::PurchaseOrderLine.where(fromdoctype: 'PQ', fromdockey: dockey).select(:dockey)
+      )
+    end
+
     def update_lines(line_list)
       lines.delete_all
       line_list.each_with_index { |l, i| lines.create!(l.merge(seq: l[:seq] || i + 1 ))}

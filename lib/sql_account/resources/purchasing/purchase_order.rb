@@ -16,6 +16,12 @@ module SqlAccount
     # traceability — PO can originate from a Purchase Request
     scope :from_request, -> { joins(:lines).where("ph_podtl.fromdoctype = 'PQ'").distinct }
 
+    def goods_received_notes
+      SqlAccount::PurchaseGoodsReceived.where(
+        dockey: SqlAccount::PurchaseGoodsReceivedLine.where(fromdoctype: 'PO', fromdockey: dockey).select(:dockey)
+      )
+    end
+
     def update_lines(line_list)
       lines.delete_all
       line_list.each_with_index { |l, i| lines.create!(l.merge(seq: l[:seq] || i + 1)) }
