@@ -56,7 +56,8 @@ module SqlAccount
     end
 
     def has_project?
-      project.present? && project != '----'
+      # project.present? && project != '----'
+      self[:project].present? && self[:project] != '----'
     end
 
     private 

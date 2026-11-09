@@ -67,6 +67,7 @@ module SqlAccount
     end
 
     def has_project?
+      # respond_to?(:project) && project.present? && project != '----'
       respond_to?(:project) && project.present? && project != '----'
     end
 
