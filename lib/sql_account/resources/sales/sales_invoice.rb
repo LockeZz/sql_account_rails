@@ -5,6 +5,8 @@ module SqlAccount
     self.primary_key = 'dockey'
 
     include SqlAccount::SalesDocument
+    include SqlAccount::CustomerKnockoffGuard
+    self.knockoff_doctype = 'IV'
 
     has_many :lines,
       class_name: 'SqlAccount::SalesInvoiceLine',
@@ -21,7 +23,7 @@ module SqlAccount
       class_name: 'SqlAccount::CustomerPayment',
       source: :customer_payment
 
-    before_destroy :check_not_knocked_off
+    # before_destroy :check_not_knocked_off
 
     
     def update_lines(line_list)

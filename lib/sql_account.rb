@@ -15,6 +15,7 @@ require_relative 'sql_account/concerns/sales_document_line'
 require_relative 'sql_account/concerns/date_validation'
 require_relative 'sql_account/concerns/auditable'
 require_relative 'sql_account/concerns/supplier_knockoff_guard'
+require_relative 'sql_account/concerns/customer_knockoff_guard'
 
 require_relative "sql_account/resources/record"
 require_relative "sql_account/resources/project/project"
