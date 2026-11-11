@@ -1,4 +1,39 @@
 ```
+@invoice.payment_vouchers        # PVs that paid a PurchaseInvoice
+@invoice.paid_amount             # SQL Account's settled total
+@invoice.outstanding_amount
+@invoice.supplier_invoice        # its A/P ledger record
+
+SqlAccount::SupplierInvoice      # all 36,678 supplier invoices, including A/P-only
+supplier.unapplied_payment_vouchers   # paid but not yet knocked off
+SqlAccount::CashBookEntry.payment_vouchers.cash_book_only   # PVs paid straight to GL accounts
+```
+
+Using PV as starting poitns
+```
+pv = SqlAccount::CashBookEntry.find_by(docno: 'PV-14135', doctype: 'PV')
+
+# Invoices
+pv.supplier_invoices          # every supplier invoice it paid (Purchase + A/P-only)
+pv.purchase_invoices          # only the Purchase-module ones (array)
+pv.invoice_link_status        # :cash_book_only / :unapplied / :partially_applied / :fully_applied / :other
+
+# Amounts (via the supplier payment behind the PV)
+pv.supplier_payment                     # the ap_sp record, or nil for cash book / other PVs
+pv.supplier_payment&.applied_amount     # total knocked off
+pv.supplier_payment&.unapplied_amount   # still waiting for an invoice / knock-off
+pv.supplier_payment&.knockoffs          # one row per invoice: koamt = how much paid to that invoice
+pv.supplier_payment&.supplier           # the supplier
+
+# The PV itself
+pv.lines                      # GL lines (what a cash-book PV paid for)
+pv.payment_account            # bank / cash account it was paid from
+pv.cash_book_only?            # true = paid straight to GL accounts
+pv.source_type                # "Supplier Payment", "Customer Refund", or nil
+```
+
+
+```
 # ── 1. A purchase invoice: who paid it, and how much each PV paid ─────────────
 inv = SqlAccount::PurchaseInvoice.find_by(docno: 'INV:25/08/3605')
 puts "== #{inv.docno} (#{inv.code})"
