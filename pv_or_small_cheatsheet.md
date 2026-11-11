@@ -32,6 +32,17 @@ pv.cash_book_only?            # true = paid straight to GL accounts
 pv.source_type                # "Supplier Payment", "Customer Refund", or nil
 ```
 
+OR examples
+```
+@sales_invoice.official_receipts          # ORs that paid it
+@customer_invoice.official_receipts       # same, for AR-only invoices too
+@or.customer_invoices                     # invoices an OR paid (Sales + AR-only)
+@or.sales_invoices                        # only the Sales-module ones
+@or.invoice_link_status                   # :cash_book_only / :unapplied / :partially_applied / :fully_applied / :other
+@or.customer_payment&.applied_amount      # also unapplied_amount, knockoffs (koamt per invoice)
+customer.unapplied_official_receipts
+```
+
 
 ```
 # ── 1. A purchase invoice: who paid it, and how much each PV paid ─────────────

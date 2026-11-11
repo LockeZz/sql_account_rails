@@ -55,6 +55,11 @@ module SqlAccount
       line_list.each_with_index { |l, i| lines.create!(l.merge(seq: l[:seq] || i + 1)) }
     end
 
+    # Official receipts that paid this sales invoice (via its ar_iv ledger record)
+    def official_receipts
+      customer_invoice ? customer_invoice.official_receipts : SqlAccount::CashBookEntry.none
+    end
+
     # private
 
     # def check_not_knocked_off
