@@ -89,6 +89,19 @@ module SqlAccount
       )
     end
 
+        # The A/P ledger record for this invoice (ap_pi, matched by docno + code)
+    def supplier_invoice
+      SqlAccount::SupplierInvoice.find_by(docno: docno, code: code)
+    end
+
+    def paid_amount
+      supplier_invoice&.paid_amount
+    end
+
+    def outstanding_amount
+      supplier_invoice&.outstanding_amount
+    end
+
     private
 
     # Prevent deletion if document has been knocked off by Payment or Credit Note

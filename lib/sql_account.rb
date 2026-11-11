@@ -40,6 +40,8 @@ require_relative 'sql_account/resources/supplier/supplier_bank_acc'
 require_relative 'sql_account/resources/supplier/supplier_cr_ctrl'
 require_relative 'sql_account/resources/supplier/supplier_tariff'
 require_relative 'sql_account/resources/supplier/supplier_knockoff'
+require_relative 'sql_account/resources/supplier/supplier_invoice'
+require_relative 'sql_account/resources/supplier/supplier_invoice_line'
 
 # Stock
 require_relative 'sql_account/resources/stock/stock_item'
