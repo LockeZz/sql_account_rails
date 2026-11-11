@@ -12,7 +12,7 @@ module SqlAccount
 
     belongs_to :gl_account,
       class_name: 'SqlAccount::GlAccount',
-      foreign_key: 'dockey',
+      foreign_key: 'account',
       primary_key: 'code',
       optional: true 
 
