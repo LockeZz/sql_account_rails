@@ -21,7 +21,7 @@ module SqlAccount
       foreign_key: 'todockey',
       primary_key: 'dockey'
 
-    scope :not_cancelled, -> { where(cancelled: true) }
+    scope :not_cancelled, -> { where(cancelled: false) }
     scope :from_purchase, -> { where(fromdoctype: 'PI') }
     scope :ap_only, -> { where(fromdoctype: nil) }
     scope :outstanding, -> { where('ap_pi.docamt <> ap_pi.paymentamt') }

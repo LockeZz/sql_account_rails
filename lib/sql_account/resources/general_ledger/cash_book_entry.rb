@@ -82,16 +82,28 @@ module SqlAccount
       supplier_invoices.to_a.filter_map(&:purchase_invoice)
     end
 
-    # Why this PV does or does not link to an invoice:
-    #   :cash_book_only     - paid straight to GL accounts; never has an invoice
-    #   :unapplied          - supplier payment not knocked off yet (paid first, or rejected)
+    # Why this PV / OR does or does not link to an invoice:
+    #   :cash_book_only     - paid/received straight to GL accounts; never has an invoice
+    #   :unapplied          - payment not knocked off yet (paid first, rejected, or advance)
     #   :partially_applied  - knocked off against invoice(s), some money still unapplied
     #   :fully_applied      - fully knocked off against invoice(s)
-    #   :other              - not a supplier payment (e.g. customer refund 'CF')
+    #   :other              - refunds ('CF' on a PV, 'SF' on an OR)
     def invoice_link_status
       return :cash_book_only if cash_book_only?
-      sp = supplier_payment
-      sp ? sp.application_status : :other
+      payment = supplier_payment || customer_payment
+      payment ? payment.application_status : :other
+    end
+
+        # Customer invoices this OR paid. Empty when the OR is a cash book receipt,
+    # or when the customer payment has not been knocked off against an invoice yet.
+    def customer_invoices
+      cp = customer_payment
+      cp ? cp.customer_invoices : SqlAccount::CustomerInvoice.none
+    end
+
+    # The Sales-module documents among those (AR-only invoices have none)
+    def sales_invoices
+      customer_invoices.to_a.filter_map(&:sales_invoice)
     end
 
     def lines_total

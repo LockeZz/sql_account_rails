@@ -77,6 +77,26 @@ module SqlAccount
     def multi_currency?
       currencycode.present? && currencycode != '----'
     end
+
+    # The Cash Book OR row for this payment (gl_cb doctype 'OR', fromdoctype 'PM', same docno)
+    def official_receipt
+      SqlAccount::CashBookEntry.official_receipts.find_by(docno: docno, fromdoctype: 'PM')
+    end
+
+    # Customer invoices this payment was knocked off against (covers AR-only invoices too)
+    def customer_invoices
+      SqlAccount::CustomerInvoice.where(dockey: knockoffs.where(todoctype: 'IV').select(:todockey))
+    end
+
+    def applied_amount
+      knockoffs.sum(:koamt)
+    end
+
+    # :unapplied / :partially_applied / :fully_applied
+    def application_status
+      return :unapplied unless knockoffs.exists?
+      unapplied_amount.zero? ? :fully_applied : :partially_applied
+    end
     
     # columns:
     # (2 Unknown computed cols)

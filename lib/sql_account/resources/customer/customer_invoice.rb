@@ -55,6 +55,14 @@ module SqlAccount
       outstanding_amount <= 0
     end
 
+    # Official receipts (gl_cb OR rows) that paid this invoice
+    # ar_knockoff (todoctype 'IV', fromdoctype 'PM') -> ar_pm.dockey -> gl_cb OR (same docno)
+    def official_receipts
+      SqlAccount::CashBookEntry.official_receipts.where(fromdoctype: 'PM').where(
+        "gl_cb.docno IN (SELECT p.docno FROM ar_pm p WHERE p.dockey IN (#{payment_knockoffs.select(:fromdockey).to_sql}))"
+      )
+    end
+
     def readonly?
       true
     end

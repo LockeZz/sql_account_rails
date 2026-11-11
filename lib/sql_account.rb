@@ -7,6 +7,7 @@ require 'active_support/concern'
 require_relative "sql_account/version"
 require_relative "sql_account/configuration"
 require_relative "sql_account/connection"
+require_relative 'sql_account/firebird_boolean_binds'
 
 require_relative 'sql_account/concerns/purchase_document'
 require_relative 'sql_account/concerns/purchase_document_line'

@@ -89,6 +89,13 @@ module SqlAccount
       agingon.strip == 'P'
     end
 
+    # Customer payments (as gl_cb OR rows) with money not yet knocked off against any invoice
+    def unapplied_official_receipts
+      SqlAccount::CashBookEntry.official_receipts.where(fromdoctype: 'PM').where(
+        "gl_cb.docno IN (SELECT p.docno FROM ar_pm p WHERE p.code = ? AND p.unappliedamt <> 0)", code
+      )
+    end
+
     # columns:
     # (2 Unknown computed cols)
     # code                  - Customer Account Code (PK, e.g. '300-B0001')
