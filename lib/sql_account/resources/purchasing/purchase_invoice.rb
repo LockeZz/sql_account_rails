@@ -75,6 +75,20 @@ module SqlAccount
       irbm_validated_utc.present?
     end
 
+    # Knockoff rows where a supplier payment (SP) settled this invoice.
+    # ph_pi -> ap_pi (docno + code) -> ap_knockoff (todoctype 'PI', fromdoctype 'SP')
+    def payment_knockoffs
+      SqlAccount::SupplierKnockoff.where(todoctype: 'PI', todockey: ledger_dockeys, fromdoctype: 'SP')
+    end
+
+    # Payment vouchers (gl_cb PV rows) that paid this invoice. Can be several (part payments).
+    # ap_knockoff.fromdockey -> ap_sp.dockey -> gl_cb PV mirror (same docno, fromdoctype 'SP')
+    def payment_vouchers
+      SqlAccount::CashBookEntry.payment_vouchers.where(fromdoctype: 'SP').where(
+        "gl_cb.docno IN (SELECT s.docno FROM ap_sp s WHERE s.dockey IN (#{payment_knockoffs.select(:fromdockey).to_sql}))"
+      )
+    end
+
     private
 
     # Prevent deletion if document has been knocked off by Payment or Credit Note

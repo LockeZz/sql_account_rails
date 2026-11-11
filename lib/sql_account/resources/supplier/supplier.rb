@@ -97,6 +97,14 @@ module SqlAccount
     # exclude heavy binary columns by default
     self.ignored_columns = %w[attachments note]
 
+
+    def unapplied_payment_vouchers
+      SqlAccount::CashBookEntry.payment_vouchers.where(fromdoctype: 'SP').where(
+        "gl_cb.docno IN (SELECT s.docno FROM ap_sp s WHERE s.code = ? AND s.unappliedamt <> 0)", code
+      )
+    end
+
+
   end
 end
 
